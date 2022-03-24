@@ -2,9 +2,11 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+//Middleware - folder to get static assets
 app.use(express.static('app'));
 
-app.use(express.static('build/contracts'));
+//Middleware - folder to get contracts
+app.use(express.static('contracts/compiled'));
 
 app.get('/',(req,res) => {
     res.sendFile(`${__dirname}/app/index.html`);
@@ -16,5 +18,5 @@ app.get('*',(req,res) => {
 });
 
 app.listen(PORT,() => {
-    console.log(`Anon Messenger app running on port ${PORT}`);
+    console.log(`Anon Communicator app running on port ${PORT}`);
 });
