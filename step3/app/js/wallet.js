@@ -15,9 +15,11 @@ async function loginWithMetaMask() {
       
     document.getElementById("userAddress").value=window.userWalletAddress;
     console.log("Checking the sender address in loginWithMetaMask()",window.userWalletAddress);
-    loginButton.innerText = `Sign out of MetaMask`;
-    //document.getElementById("loginButton").classList.add("hidden");
-    //document.getElementById("signOutButton").classList.remove("hidden");
+    //loginButton.innerText = `Sign out of MetaMask`;
+    document.getElementById("loginButton").style.visibility = "hidden";
+    console.log("loginWithMetaMask() Login Button Hidden");
+    document.getElementById("signOutButton").removeAttribute("hidden");
+    //document.getElementById("signOutButton").style.visibility = "visible";
     
     loginButton.removeEventListener('click', loginWithMetaMask)
     setTimeout(() => {
@@ -40,3 +42,23 @@ function showAddress() {
     ).innerText = `ETH Address: ${window.userAddress}`;
     //document.getElementById("logoutButton").classList.remove("hidden");
   }
+
+  function signOutOfMetaMask() {
+    window.userWalletAddress = null
+   // userWallet.innerText = ''
+    //loginButton.innerText = 'Sign in with MetaMask'
+    document.getElementById("signOutButton").setAttribute("hidden","hidden");
+    document.getElementById("loginButton").style.visibility = "visible";
+
+    window.userAddress = null;
+    window.localStorage.removeItem("userAddress");
+    showAddress();
+
+
+    loginButton.removeEventListener('click', signOutOfMetaMask)
+    setTimeout(() => {
+        loginButton.addEventListener('click', loginWithMetaMask)
+        //location.reload(true);
+    }, 200)
+
+}      
