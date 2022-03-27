@@ -51,8 +51,8 @@ function URI_Fetch(myCallback)
 }
 
 async function myDisplayer(some) {
-  document.getElementById("demo").innerHTML = some.IpfsHash;
-  document.getElementById("demo2").innerHTML = some.Timestamp;
+ // document.getElementById("demo").innerHTML = some.IpfsHash;
+ // document.getElementById("demo2").innerHTML = some.Timestamp;
   console.log("callback object",some);
 
   var x = document.getElementById("recepientAddress").value;
