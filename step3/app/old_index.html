@@ -68,30 +68,8 @@
     </div>
 
    
-    <button type="button" id='sendButton' onclick="uiApi()" 
+    <button type="button" id='sendButton' onclick="URI_Fetch(myDisplayer)" 
     class="btn btn-primary">Send Message</button>
-
-    <script>
-    async function uiApi()
-    {
-      var y = document.getElementById("messageArea").value;
-      var x = document.getElementById("recepientAddress").value;
-      // add sender address and timestamp of message posted on IPFS
-      var z = document.getElementById("userAddress").value;
-
-      const data = {x,y,z};
-      const options = {
-        method : 'POST',
-        headers : {
-          "Content-Type":"application/json",
-        },
-        body: JSON.stringify(data)
-      };
-      fetch('/api',options);
-
-    }
-
-    </script>
 
   <footer>
     <p class="text-center">Copyright 2022
