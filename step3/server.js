@@ -1,5 +1,5 @@
 //const express = require('express');
-import express from 'express';
+import express, { response } from 'express';
 import fetch from 'node-fetch';
 import pinataSDK from '@pinata/sdk';
 //const pinataSDK = require('@pinata/sdk');
@@ -27,7 +27,11 @@ app.get('/',(req,res) => {
 });
 
 //Setup this api for collecting data from client side UI i.e. form data.
-app.post('/api',buildjson,pindata,mint);
+app.post('/api/:web3',buildjson,pindata,mint,(req,res,next) => {
+    console.log("in Route /api with web3 passed")
+    response.end();
+
+});
 /* => {
     //Write the function to Build JSON and Generate IPFS hash
     console.log("After pindata call on SERVER.JS /api route ===> ipfs");
@@ -39,6 +43,7 @@ app.post('/api',buildjson,pindata,mint);
 });*/
 
 function buildjson(req,res,next){
+    //console.log("REQUEST PARAMS HERE",request.params['web3']);
     console.log("*************** SERVER buildjson ROUTE  START ***********************")
     console.log("######## THIS IS THE REQUEST ##########",req.body);
     console.log(`*************** SERVER /api ROUTE END ***********************,
@@ -53,6 +58,8 @@ async function pindata(req,res,next) {
    //Calling pinata service
    await  pinata.pinJSONToIPFS(req.body).then((res) => {
         console.log("pinJSONToIPFS Success",res);
+        req.body.IpfsHash=res.IpfsHash;
+        req.body.IpfsTimeStamp=res.Timestamp;
     }).catch((err) => {
         console.log(err);
     });

@@ -72,13 +72,20 @@
     class="btn btn-primary">Send Message</button>
 
     <script>
+    // This is the function to post the form data to the server
     async function uiApi()
     {
+      //Form fields packed into a json.
       var y = document.getElementById("messageArea").value;
       var x = document.getElementById("recepientAddress").value;
       // add sender address and timestamp of message posted on IPFS
       var z = document.getElementById("userAddress").value;
-
+       
+      //Get the web3 object to pass as route param
+      const web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+      console.log("web3",web3);
+    
       const data = {x,y,z};
       const options = {
         method : 'POST',
@@ -87,7 +94,9 @@
         },
         body: JSON.stringify(data)
       };
-      fetch('/api',options);
+      
+      //Pass web3 Object as Route Param
+      fetch(`/api/:${web3}`,options);
 
     }
 
