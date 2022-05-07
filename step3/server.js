@@ -1,5 +1,6 @@
 //const express = require('express');
 import express, { response } from 'express';
+import Web3 from 'web3';
 import fetch from 'node-fetch';
 import pinataSDK from '@pinata/sdk';
 //const pinataSDK = require('@pinata/sdk');
@@ -15,6 +16,7 @@ app.use(express.urlencoded({extended:false}))
 //Middleware - folder to get static assets
 app.use(express.static('app'));
 
+//to use json in our API
 app.use(express.json({limit : '1mb'}));
 
 
@@ -54,7 +56,7 @@ function buildjson(req,res,next){
 }
 
 async function pindata(req,res,next) {
-    console.log("Json for IPFS",req.body);
+    console.log("pindata function ####### Json for IPFS",req.body);
    //Calling pinata service
    await  pinata.pinJSONToIPFS(req.body).then((res) => {
         console.log("pinJSONToIPFS Success",res);
@@ -67,8 +69,19 @@ async function pindata(req,res,next) {
     //console.log("REsponse object",res.body);
 }
 
-function mint(req,res) {
+async function mint(req,res) {
     console.log("Mint Function",req.body);
+    // Web3 magic here
+    var web3 = new Web3(new Web3.providers.HttpProvider('https://locahost:7545'))
+    console.log("We have web3 ----- PHEW!!!!");
+
+    //const accounts = await web3.eth.getAccounts();
+    //console.log("accounts",accounts);
+
+    console.log("Setting Contract to Local Ganache Address")
+    const contractAddress = "0xF32A0316ABD5E96502c8C8B584D490D690413B7B"; //Ganache - local address 
+    console.log("CONTRACT ADDRESS GANACHE --> ",contractAddress);
+
 } 
 
 // Define Route to view inbox
