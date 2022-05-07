@@ -1,7 +1,8 @@
 //const express = require('express');
 import express, { response } from 'express';
 import Web3 from 'web3';
-import fetch from 'node-fetch';
+//import fetch from 'node-fetch';
+import fs from 'fs';
 import pinataSDK from '@pinata/sdk';
 //const pinataSDK = require('@pinata/sdk');
 const pinata = pinataSDK('26689a58bbd3e05207c5','622c0634c379b1139f92dfd22f6dd79dd600df1eb09bec13cb70456a5e3835fa');
@@ -81,6 +82,20 @@ async function mint(req,res) {
     console.log("Setting Contract to Local Ganache Address")
     const contractAddress = "0xF32A0316ABD5E96502c8C8B584D490D690413B7B"; //Ganache - local address 
     console.log("CONTRACT ADDRESS GANACHE --> ",contractAddress);
+
+    //const getContract_abi = await fetch('/Users/aheeshnagraj/Documents/GitHub/NodeMessage/step3/app/contracts/compiled/artworkabi.json');
+    const abi_data=fs.readFileSync('/Users/aheeshnagraj/Documents/GitHub/NodeMessage/step3/app/contracts/compiled/artworkabi.json',(err,data)=> {
+        if(err) {
+            console.error(err);
+            return;
+        }
+        console.log(data);
+    });
+    
+    const abistring= JSON.parse(abi_data);
+    console.log("getContract() typeof abistring --->", typeof(abistring));
+    console.log("getContract() abistring object ---> ",abistring);
+
 
 } 
 
