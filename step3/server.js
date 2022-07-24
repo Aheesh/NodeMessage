@@ -35,6 +35,8 @@ app.post('/api/:web3',buildjson,pindata,mint,(req,res,next) => {
     response.end();
 
 });
+
+
 /* => {
     //Write the function to Build JSON and Generate IPFS hash
     console.log("After pindata call on SERVER.JS /api route ===> ipfs");
@@ -77,8 +79,8 @@ async function mint(req,res) {
     if (typeof web3 !== 'undefined') {
         var web3 = new Web3(web3.currentProvider)
       } else {
-        var web3 = new Web3(new Web3.providers.HttpProvider('HTTP://127.0.0.1:7545')) 
-        //var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/'))
+        //var web3 = new Web3(new Web3.providers.HttpProvider('HTTP://127.0.0.1:7545')) 
+        var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/a7b7dc51a707464a8e6637744f89a912'))
     }
 
     //var web3_instance = new Web3(new Web3.providers.HttpProvider('https://locahost:7545'))
@@ -98,7 +100,7 @@ async function mint(req,res) {
         } else if (ChainID==1337) { 
          // SET GANACHE CONTRACT ADDRESS HERE
          console.log("Setting Contract to Local Ganache Address")
-         contractAddress = "0x864e28E80ea58EC20bBD9cbd679dD6268B13649f"; //Ganache - local address 
+         contractAddress = "0x98Ab6F4B6e4284f380cE6992c9C8439F2f7575e0"; //Ganache - local address 
         } else {
          console.log("Network not configured for contract call in Mint.js")
      }
@@ -148,12 +150,14 @@ async function mint(req,res) {
     const transactionReceipt = await nftContract.methods.registerArtwork(req.body.x,req.body.IpfsHash)
     .send({
         from:accounts[0],
-        gas: 6721975, 
+        gas: 600000, 
         gasPrice: '30000000'
     });
 
     console.log(`Transaction receipt: ${JSON.stringify(transactionReceipt)}`);
 
+    var tokens = await nftContract.methods.balanceOf(accounts[0]).call();
+      console.log("No . of tokens: ",tokens," :for account",accounts[0]);
 } 
 
 // Define Route to view inbox
